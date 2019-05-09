@@ -9,6 +9,8 @@ import {Card} from 'antd'
 import http from "./api/index";
 import {SINGER_LIST} from "./api/qqMusicApi";
 import axios from 'axios'
+
+
 class App extends Component {
   render() {
     return (
@@ -55,10 +57,7 @@ let fruitsArr=["pomme","Banane", "orange", "fraise", "raisin"];
 const listItems = fruitsArr.map((number,index) =>
   <li key={index}>{number}</li>
 );
-// http.get("/movie/in_theaters")
-//     .then(data=>{
-//       console.log(data)
-//     })
+
 
 function Fruits() {
   return <ul>{listItems}</ul>

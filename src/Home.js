@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import {Card,Input,Modal, Button} from 'antd';
 import './Home.css';
-
-
+import http from "./api/index";
+import axios from 'axios'
 export default class Home extends Component{
   constructor(){
     super();
@@ -25,7 +25,29 @@ export default class Home extends Component{
     this.setState({
         name
     })
-}
+  }
+  //组件已经被挂载时 （生命周期）
+  componentDidMount() {
+    http.get("http://118.24.41.230:8085")
+    .then(data=>{
+      console.log(data)
+    })
+    this.timerID = setInterval(
+      () => this.tick(),
+      1000
+    );
+  }
+  //组件已经被卸载时 （生命周期）
+  componentWillUnmount() {
+    clearInterval(this.timerID);
+  }
+  //时间实时刷新
+  tick() {
+    this.setState({
+      date: new Date()
+    });
+  }
+
     render(){
       
       return <div className="content">
@@ -39,6 +61,7 @@ export default class Home extends Component{
         <span onClick={this.changeName} className="Greetings">Bonjour {this.state.name} {this.state.date.toLocaleTimeString()}</span>
         <Dialog fatherHandleClick={ this.fatherHandleClick.bind(this) }></Dialog>
         <p>{this.state.name}</p>
+        <Counts></Counts>
       </div>
     }
     
@@ -48,7 +71,7 @@ export default class Home extends Component{
   
     return <Card style={{ width: 240 }} bodyStyle={{ padding: 0 }} className="card">
     <div className="custom-image">
-      {<img alt="example" width="100%" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" /> }
+      {/* {<img alt="example" width="100%" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" /> } */}
     </div>
     <div className="custom-card">
       <h3>Rythme de rue européen</h3>
@@ -108,10 +131,24 @@ class Dialog extends Component {
         >
           <p>S'il vous plaît entrez votre nom:</p>
           <Input onChange={this.handelChange.bind(this)} value={this.state.name}></Input>
+         
           <p>{this.state.date}</p>
           
         </Modal>
       </div>
     );
   }
+}
+//使用hook
+function Counts() {
+  const [count,setCount] = useState(0);
+  useEffect(()=>{
+
+  })
+  return (
+    <div>
+      <p>you clicked {count} times</p>
+      <Button onClick={()=>{setCount(count+1)}}>Click me</Button>
+    </div>
+  )
 }
