@@ -2,12 +2,16 @@ import React from 'react';
 import {HashRouter,Route,Switch} from 'react-router-dom';
 import Home from './Home';
 import App from './App';
+import router,{NestedRoute} from './router/index'
 
 const BasicRoute = () => (
     <HashRouter>
         <Switch>
-            <Route exact path="/" component={App}/>
-            <Route exact path="/home" component={Home}/>
+            {
+              router.map((route, i) =>
+                <Route exact key={i} path={route.path} component={route.component}/>
+              )
+            }
         </Switch>
     </HashRouter>
 )

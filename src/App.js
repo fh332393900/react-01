@@ -7,7 +7,7 @@ import { Collapse } from 'antd';
 import { Timeline } from 'antd';
 import {Card} from 'antd'
 import http from "./api/index";
-import {SINGER_LIST} from "./api/qqMusicApi";
+
 import axios from 'axios'
 
 

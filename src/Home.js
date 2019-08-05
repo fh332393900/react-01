@@ -1,8 +1,7 @@
 import React, { Component, useState, useEffect } from 'react';
-import {Card,Input,Modal, Button} from 'antd';
+import {Card,Input,Modal, Button,Avatar} from 'antd';
 import './Home.css';
-import http from "./api/index";
-import axios from 'axios'
+import {getList} from './api/qqApi'
 export default class Home extends Component{
   constructor(){
     super();
@@ -28,14 +27,13 @@ export default class Home extends Component{
   }
   //组件已经被挂载时 （生命周期）
   componentDidMount() {
-    http.get("http://118.24.41.230:8085")
-    .then(data=>{
-      console.log(data)
-    })
     this.timerID = setInterval(
       () => this.tick(),
       1000
     );
+    getList().then(data=>{
+
+    })
   }
   //组件已经被卸载时 （生命周期）
   componentWillUnmount() {
@@ -68,12 +66,16 @@ export default class Home extends Component{
 };
 
  function CardText() {
-  
+    const [user,setUser] = useState('fenghang');
+
     return <Card style={{ width: 240 }} bodyStyle={{ padding: 0 }} className="card">
     <div className="custom-image">
-      {/* {<img alt="example" width="100%" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" /> } */}
+      
+      {<img alt="example" width="100%" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" /> }
     </div>
     <div className="custom-card">
+    <Avatar style={{marginBottom:10}} src='https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'></Avatar>
+    <span style={{fontSize:18,marginLeft:10}}>{user}</span>
       <h3>Rythme de rue européen</h3>
       <p>www.instagram.com</p>
       <p>La mode se démode, le style jamais.<br/>
@@ -143,7 +145,7 @@ class Dialog extends Component {
 function Counts() {
   const [count,setCount] = useState(0);
   useEffect(()=>{
-
+    
   })
   return (
     <div>
